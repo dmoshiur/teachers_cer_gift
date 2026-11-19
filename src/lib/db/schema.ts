@@ -1,0 +1,6 @@
+import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
+export const teachers = sqliteTable('teachers',{id:text('id').primaryKey(),name:text('name').notNull(),role:text('role').notNull(),photoUrl:text('photo_url'),templateId:text('template_id').notNull().default('floral'),sortOrder:integer('sort_order').notNull().default(0),isPublic:integer('is_public').notNull().default(1),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull()},t=>[index('teachers_order_idx').on(t.sortOrder)]);
+export const settings = sqliteTable('settings',{key:text('key').primaryKey(),value:text('value').notNull()});
+export const rolePresets = sqliteTable('role_presets',{id:text('id').primaryKey(),label:text('label').notNull(),sortOrder:integer('sort_order').notNull().default(0)});
+export const auditLogs = sqliteTable('audit_logs',{id:text('id').primaryKey(),action:text('action').notNull(),entity:text('entity').notNull(),entityId:text('entity_id'),meta:text('meta'),ip:text('ip'),createdAt:text('created_at').notNull()});
+export const loginAttempts = sqliteTable('login_attempts',{id:integer('id').primaryKey({autoIncrement:true}),ip:text('ip').notNull(),createdAt:text('created_at').notNull(),success:integer('success').notNull()},t=>[index('login_attempts_ip_time_idx').on(t.ip,t.createdAt)]);

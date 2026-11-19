@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {desc} from 'drizzle-orm';import {db} from '@/lib/db';import {auditLogs} from '@/lib/db/schema';import {requireSession} from '@/lib/auth';
+export async function GET(){if(!await requireSession())return NextResponse.json({error:'Unauthorized'},{status:401});return NextResponse.json(await db.select().from(auditLogs).orderBy(desc(auditLogs.createdAt)).limit(100))}

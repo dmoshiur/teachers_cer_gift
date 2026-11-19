@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./e2e',timeout:120000,workers:1,use:{baseURL:'http://localhost:3100',headless:true},webServer:{command:'node scripts/prepare-e2e.mjs && npm run dev -- --port 3100',url:'http://localhost:3100',reuseExistingServer:false,timeout:120000,env:{TURSO_DATABASE_URL:'file:playwright.db',TURSO_AUTH_TOKEN:'',ADMIN_PASSWORD_HASH:'',SESSION_SECRET:'playwright-only-secret-not-for-production-000000',BLOB_READ_WRITE_TOKEN:''}}});
