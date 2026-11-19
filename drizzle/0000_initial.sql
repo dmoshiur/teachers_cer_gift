@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS teachers (id TEXT PRIMARY KEY NOT NULL, name TEXT NOT NULL, role TEXT NOT NULL, photo_url TEXT, template_id TEXT NOT NULL DEFAULT 'floral', sort_order INTEGER NOT NULL DEFAULT 0, is_public INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS teachers_order_idx ON teachers(sort_order);
+CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS role_presets (id TEXT PRIMARY KEY NOT NULL, label TEXT NOT NULL, sort_order INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS audit_logs (id TEXT PRIMARY KEY NOT NULL, action TEXT NOT NULL, entity TEXT NOT NULL, entity_id TEXT, meta TEXT, ip TEXT, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS login_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, ip TEXT NOT NULL, created_at TEXT NOT NULL, success INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS login_attempts_ip_time_idx ON login_attempts(ip,created_at);

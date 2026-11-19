@@ -1,0 +1,6 @@
+import { describe,it,expect } from 'vitest';
+import {readFileSync} from 'node:fs';
+import floral from '../src/templates/floral.json';import premium from '../src/templates/premium.json';import navy from '../src/templates/navy-gold.json';import boxed from '../src/templates/boxed.json';
+import {hashPassword,verifyPassword} from '../src/lib/password';
+describe('original tribute artwork',()=>{for(const [name,data] of Object.entries({floral,premium,navy,boxed})){it(`${name} has placeholders and no pure black`,()=>{expect(data.html).toContain('{{NAME}}');expect(data.html).toContain('{{ROLE}}');expect(data.html).toContain('{{PHOTO_IMG}}');expect(data.css+' '+data.html).not.toMatch(/#000(?:000)?\b|\bblack\b|rgb\(\s*0\s*,\s*0\s*,\s*0\s*\)/i)})}it('print styles avoid pure black',()=>{expect(readFileSync('src/app/globals.css','utf8')).not.toMatch(/#000(?:000)?\b|\bblack\b|rgb\(\s*0\s*,\s*0\s*,\s*0\s*\)/i)})});
+describe('passwords',()=>{it('round-trips scrypt and rejects wrong passwords',async()=>{const hash=await hashPassword('long password');expect(await verifyPassword('long password',hash)).toBe(true);expect(await verifyPassword('wrong',hash)).toBe(false);expect(await verifyPassword('wrong','invalid')).toBe(false)})});
